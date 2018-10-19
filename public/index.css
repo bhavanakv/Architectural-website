@@ -1,0 +1,33 @@
+.navbar{
+    z-index:1000; 
+    position: relative;
+}
+.carousel {
+    position:absolute !important;
+    width:100%;
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    top:0;
+    margin-right: 0px;
+}
+.navbar a {
+    color: rgb(97, 90, 90) !important;
+    font-weight: bold;
+}
+
+#item {
+    color:  black !important;
+    font-weight: normal;
+}
+
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+#contact {
+    overflow: hidden;
+    margin-top:630px;
+}
+
