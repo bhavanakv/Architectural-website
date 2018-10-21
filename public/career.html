@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="index.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
         <style>
@@ -19,8 +19,31 @@
         </style>
         <script>
             $(document).ready(function(){
+                $(".alert").css("display","none");
                 $("#submit").click(function(){
-                    alert("Hello world!");
+                    var name = $("#name").val();
+                    var email = $("#email").val();
+                    var phone = $("#phone").val();
+                    var current = $("#employment").val();
+                    console.log(current);
+                    var position = $("#position").val();
+                    var info = $("#info").val();
+                    var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+                    var phone_regex = /\d{10}/;
+                    if(name==""||email=="")
+                        alert("Please fill in your details!");
+                    if(!email_regex.test(email))
+                        alert("Please enter valid email address");
+                    if(!phone_regex.test(phone))
+                        alert("Please enter valid phone number");
+                    $.post("http://localhost:8000/api/careers",{name,email,phone,current,position,info},(data) => {
+                        if(data.success) {
+                            $("#success").css("display","block");                             
+                            setTimeout(function() {
+                                $("#success").css("display","none");                                 
+                            }, 2000);   
+                        }
+                    });
                 });
             });
         </script>
@@ -51,7 +74,7 @@
                                     <div class="form-group row">
                                         <label class="col-md-3 col-form-label">Email</label>
                                         <div class="col-md-8">
-                                            <input type="email" class="form-control" id="inputPassword" placeholder="Current Email">
+                                            <input type="email" class="form-control" id="email" placeholder="Current Email">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -63,7 +86,7 @@
                                     <div class="form-group row">
                                         <label class="col-md-3 col-form-label">Position applied for</label>
                                         <div class="col-md-8">
-                                            <select style="width: 100%">
+                                            <select style="width: 100%" id="position">
                                                 <option value="1">Intern</option>
                                                 <option value="2">Full time</option>
                                             </select>
@@ -78,15 +101,22 @@
                                     <div class="form-group row">
                                         <label class="col-md-3 col-form-label">Additional info</label>
                                         <div class="col-md-8">
-                                            <textarea placeholder="Additional information" style="width: 100%"></textarea> 
+                                            <textarea placeholder="Additional information" id="info" style="width: 100%"></textarea> 
                                         </div>
                                     </div>  
                                     <input type="button" value="Submit" id="submit"/>     
                                 </form>
+                                <div class="alert alert-success" role="alert" id="success">
+                                        Registered Sucessfully. We will update you soon.
+                                   </div>
+                                   <div class="alert alert-danger" role="alert">
+                                       Unknown error occurred. Try again.
+                                   </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                
             </div>
         </div>
     </body>

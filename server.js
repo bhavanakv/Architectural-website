@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
 const  mysql = require("mysql");
+let bodyParser = require("body-parser");
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser({extended: true}));
 
 var con;
 function connection() {
@@ -16,7 +18,19 @@ function connection() {
             console.log("Connected!");
     }); 
 }
-connection();
+
+app.post("/api/careers",function(req,res) {
+    let {name,email,phone,current,position,info} = req.body;
+    res.writeHead(200, {"Content-Type": "application/json"});
+    connection();
+    con.query("insert into careers values(?,?,?,?,?,?)",[name,email,phone,position,current,info],(err) => {
+        if(err) {
+            res.end(JSON.stringify({success:false, message:"Unknown error occurred.Try again."}));
+        }
+        res.end(JSON.stringify({success:true, message:"Received details. We will update you soon."}));
+        });
+});
+
 var port = 8000;
 app.listen(port);
 console.log("server on "+port);
