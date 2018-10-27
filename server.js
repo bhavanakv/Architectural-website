@@ -31,6 +31,18 @@ app.post("/api/careers",function(req,res) {
         });
 });
 
+app.get("/api/applications",function(req,res) {
+    res.writeHead(200, {"Content-Type": "application/json"});
+    connection();
+    con.query("select * from careers",function(err,rows,fields) {
+        if(err) {
+            res.end(JSON.stringify({success: false,message: "Unknown error occurred"}));
+        }
+        res.end(JSON.stringify({success: true, message: rows}));
+    });
+    con.end();
+});
+
 var port = 8000;
 app.listen(port);
 console.log("server on "+port);
