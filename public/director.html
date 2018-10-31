@@ -1,99 +1,204 @@
 <html>
-    <head>
-        <title>Director</title>
-        <link rel="stylesheet" href="index.css">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-        <style>
-            img {
-                border-radius: 50%;
-                border: 1px solid white;
-            }
-            body {
-                background-color: #d1cfcf;
-            }
-            .navbar {
-                background-color: rgb(0,128,128);
-            }
-            #brand, #logout {
-                color: white !important;
-            }
-            table, th,td {
-                border: 1px solid;
-                padding: 5px;
-            }
-            table {
-                border-collapse: separate !important;
-            }
-            tr:nth-child(odd) {
-                background-color: #d1cfcf;
-            }
-        </style>
-        <script>    
-        $(document).ready(function(){
-            $("#job").css("display","none");
-            $("#option3").click(function(){
-                $("#job").css("display","block");
-                $.get("http://localhost:8000/api/applications",(data) => {
-                    if(!data.success)
+
+<head>
+    <title>Director</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <style>
+        img {
+            border-radius: 50%;
+            border: 1px solid white;
+        }
+
+        body {
+            background-color: #d1cfcf;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            position: fixed;
+        }
+
+        .navbar {
+            background-color: rgb(0, 128, 128);
+        }
+
+        #brand, #logout {
+            color: white !important;
+        }
+
+        table,th,td {
+            border: 1px solid;
+            padding: 5px;
+        }
+
+        table {
+            border-collapse: separate !important;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #d1cfcf;
+        }
+    </style>
+    <script>    
+        $(document).ready(function () {
+            $("#job").css("display", "none");
+            $("#add").css("display", "none");
+            $("#success").css("display", "none");
+            $("#danger").css("display", "none");
+            $("#option1").click(function() {
+                $("#job").css("display","none");
+                $("#add").css("display","block");
+                $("#button").click(function() {
+                    var name = $("#name1").val();
+                    var address = $("#address").val();
+                    var info = $("#info").val();
+                    console.log(address);
+                    let fd = new FormData();
+                    fd.append("name", name);
+                    fd.append("address", address);
+                    fd.append("info", info);
+                    fd.append("dp", $("#dp")[0].files[0]);
+                    $.ajax({
+                        url: "http://localhost:8000/api/add",
+                        method: "POST",
+                        processData: false,
+                        contentType: false,
+                        dataType: "json",
+                        data: fd,
+                        success: (data) => {
+                            if (data.success) {
+                                $("#success").css("display", "block");
+                                setTimeout(() => {
+                                    $("#success").css("display", "none");
+                                }, 2000);
+                            }
+                            else {
+                                $("#danger").css("display", "block");
+                                setTimeout(() => {
+                                    $("#danger").css("display", "none");
+                                }, 2000);
+                            }
+                        }
+                    });
+                });
+            });
+            $("#option3").click(function () {
+                $("#add").css("display", "none");
+                $("#job").css("display", "block");
+                $.get("http://localhost:8000/api/applications", (data) => {
+                    if (!data.success)
                         alert("Error occurred. Try again.");
                     else {
-                        for(var j=0;j<data.message.length;j++) {
+                        for (var j = 0; j < data.message.length; j++) {
                             var value = data.message[j];
                             var position = "";
-                            if(value.position == 1) 
+                            if (value.position == 1)
                                 position = "Intern";
                             else
                                 position = "Full time";
-                            $("table").append("<tr><td>"+value.name+"</td><td>"+value.email+"</td><td>"+value.phone+"</td><td>"+position+"</td><td>"+value.current+"</td><td>"+value.info+"</td></tr>");
+                            $("table").append("<tr><td>" + value.name + "</td><td>" + value.email + "</td><td>" + value.phone + "</td><td>" + position + "</td><td>" + value.current + "</td><td>" + value.info + "</td></tr>");
                         }
                     }
                 });
             });
         });
-        </script>
-    </head>
-    <body>
-        <div class="sidenav">
-            <img src="slide1.jpg" alt="director" width="150px" height="150px" style="margin-left:33px; margin-top: 60px; margin-bottom: 10px"/>
-            <a href="#"><i class="fa fa-plus" style="font-size:18px; margin-right: 10px;"></i>Add projects</a>
-            <a href="#"><i class="fa fa-minus" style="font-size:18px; margin-right: 10px;"></i>Delete projects</a>
-            <a href="#" id="option3"><i class="fa fa-address-card" style="font-size:18px; margin-right: 10px;"></i>Job applications</a>
-        </div>
-        <div class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" id="brand">Director page</a>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav ml-auto">
+    </script>
+</head>
+
+<body>
+    <div class="sidenav">
+        <img src="slide1.jpg" alt="director" width="150px" height="150px" style="margin-left:33px; margin-top: 60px; margin-bottom: 10px"
+        />
+        <a href="#" id="option1">
+            <i class="fa fa-plus" style="font-size:18px; margin-right: 10px;"></i>Add projects</a>
+        <a href="#">
+            <i class="fa fa-minus" style="font-size:18px; margin-right: 10px;"></i>Delete projects</a>
+        <a href="#" id="option3">
+            <i class="fa fa-address-card" style="font-size:18px; margin-right: 10px;"></i>Job applications</a>
+    </div>
+    <div class="navbar navbar-expand-lg">
+        <a class="navbar-brand" id="brand">Director page</a>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
                     <a class="nav-link" id="logout" href="main.html">Logout</a>
                 </li>
-                </ul>
-            </div>
+            </ul>
         </div>
-        <div class="row align-items-center">
-            <div class="col-8 mx-auto">
-                <div class="card" id="job" style="margin-top: 100px; margin-left: 30px;">
-                    <div class="card-body text-center">
-                        <div class="card-title">
-                            <i class="fa fa-address-card" style="color:teal; font-size: 50px;"></i>
-                            <h3 style="margin-top:5px; margin-bottom: 20px; color: teal;">Job applications</h3>
-                        </div>    
-                        <table>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Position applied</th>
-                                <th>Current employment</th>                                    <th>Info</th>
-                            </tr>
-                        </table>
-                    </div>    
+    </div>
+    <div class="row align-items-center">
+        <div class="col-8 mx-auto">
+            <div class="card" id="job" style="margin-top: 100px; margin-left: 30px;">
+                <div class="card-body text-center">
+                    <div class="card-title">
+                        <i class="fa fa-address-card" style="color:teal; font-size: 50px;"></i>
+                        <h3 style="margin-top:5px; margin-bottom: 20px; color: teal;">Job applications</h3>
+                    </div>
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Position applied</th>
+                            <th>Current employment</th>
+                            <th>Info</th>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
-        
-    </body>
+    </div>
+    <div class="row align-items-center">
+        <div class="col-8 mx-auto">
+            <div class="card" id="add" style="margin-top: 100px; margin-left: 30px;">
+                <div class="card-body text-center">
+                    <div class="card-title">
+                        <i class="fa fa-plus" style="color:teal; font-size: 50px;"></i>
+                        <h3 style="margin-top:5px; margin-bottom: 20px; color: teal;">Add projects</h3>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Project name</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="name1" placeholder="Enter the project name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Address</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" id="address" placeholder="Enter the address of the project"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Information</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" id="info" placeholder="Additional information"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Choose a picture</label>
+                            <div class="col-md-3">
+                                <input id="dp" type="file" accept="image/*" name="dp" />
+                            </div>
+                        </div>
+                        <button id="button" class="btn mx-auto" style="background-color: teal; color: white;">Add</button>
+                    </div>
+                    <div class="alert alert-success mx-auto" role="alert" id="success">
+                        Added the project successfully!
+                    </div>
+                    <div class="alert alert-danger mx-auto" role="alert" id="danger">
+                        Couldn't add the project. Please try again.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>

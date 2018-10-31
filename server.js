@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const  mysql = require("mysql");
 let bodyParser = require("body-parser");
+const formidable = require("formidable");
+let fs = require("fs");
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser({extended: true}));
 
@@ -41,6 +43,38 @@ app.get("/api/applications",function(req,res) {
         res.end(JSON.stringify({success: true, message: rows}));
     });
     con.end();
+});
+
+app.post("/api/add",function(req,res) {
+    res.writeHead(200, {"Content-Type": "application/json"});
+    let form = new formidable.IncomingForm();
+    form.parse(req, (err, fields, files) => {
+        if (err) {
+            console.log("Error");
+            res.end(JSON.stringify({success: false, message: "Couldn't parse request"}));
+            return;
+        }
+        let {name,address,info} = fields;
+        let {dp} = files;
+        if (!fs.existsSync("./buildings"))
+            fs.mkdirSync("./buildings");
+        if (!fs.existsSync(`./buildings/${name}`))
+            fs.mkdirSync(`./buildings/${name}`);
+        
+        fs.rename(dp.path, `./buildings/${name}/${dp.name}`, (e) => {
+            if (e) {
+                res.end(JSON.stringify({success: false, message: "Couldn't upload image"}));
+                return;
+            }
+            connection();
+            con.query("insert into projects values(?,?,?,?,curdate())",[name,address,info,`./buildings/${name}/${dp.name}`],(err) => {
+                if(err) {
+                    res.end(JSON.stringify({success:false, message:"Unknown error occurred.Try again."}));
+                }
+                res.end(JSON.stringify({success:true, message:"Project added successfully"}));
+            });
+        });
+    });
 });
 
 var port = 8000;
