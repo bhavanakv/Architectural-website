@@ -17,7 +17,7 @@ function connection() {
     }); 
     con.connect(function(err) {
         if(err) throw err;
-            console.log("Connected!");
+        console.log("Connected!");
     }); 
 }
 
@@ -85,6 +85,22 @@ app.get("/api/projects",function(req,res) {
             res.end(JSON.stringify({success: false,message: "Unknown error occurred"}));
         }
         res.end(JSON.stringify({success: true, message: rows}));
+    });
+    con.end();
+});
+
+app.post("/api/delete_projects",function(req,res) {
+    res.writeHead(200, {"Content-Type": "application/json"});
+    let {remove} = req.body;
+    connection();
+    con.query("delete from projects where image=?",[remove],(err) => {
+        if(err)
+            res.end(JSON.stringify({success: false}));
+        else {
+            var rm = remove.substring(2);
+            fs.unlinkSync(`public/${rm}`);
+            res.end(JSON.stringify({success: true}));
+        }
     });
     con.end();
 });

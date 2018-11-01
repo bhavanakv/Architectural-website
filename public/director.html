@@ -30,8 +30,7 @@
             background-color: rgb(0, 128, 128);
         }
 
-        #brand,
-        #logout {
+        #brand,#logout {
             color: white !important;
         }
 
@@ -40,7 +39,14 @@
         }
 
         #tab {
-            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .img-thumbnail {
+            transform: scale(0.8, 0.8);
+            -ms-transform: scale(0.8, 0.8);
+            -webkit-transform: scale(0.8, 0.8);
         }
     </style>
     <script>    
@@ -51,6 +57,8 @@
             $("#danger").css("display", "none");
             $("#delete").css("display", "none");
             $("#tab").css("display", "none");
+            var flag = 0;
+            var flag1 = 0;
             $("#option1").click(function () {
                 $("#job").css("display", "none");
                 $("#delete").css("display", "none");
@@ -92,35 +100,51 @@
                 $("#add").css("display", "none");
                 $("#job").css("display", "none");
                 $("#delete").css("display", "block");
-                $("table").css("display", "block");
-                $.get("http://localhost:8000/api/projects", (data) => {
-                    if (data.success) {
-                        for (var i = 0; i < data.message.length; i++) {
-                            var value = data.message[i];
-                            $("#tab").append("<tr><td><a href='#'><i class='fa fa-trash'></i></a></td><td>" + value.name + "</td><td>" + value.address + "</td><td><img class='img-thumbnail' style='width: auto;' src='" + value.image + "'</td></tr>");
+                $("#tab").css("display", "table");
+                if(flag1 == 0) {
+                    $.get("http://localhost:8000/api/projects", (data) => {
+                        if (data.success) {
+                            for (var i = 0; i < data.message.length; i++) {
+                                var value = data.message[i];
+                                $("#tab").append("<tr><td><a href='#'><i class='fa fa-trash' id='"+i+"'></i></a></td><td>" + value.name + "</td><td>" + value.address + "</td><td><img class='img-thumbnail' src='" + value.image + "'</td></tr>");
+                            }
                         }
-                    }
-                });
+                        $("i.fa-trash").click(function(e) {
+                            var idClicked = e.target.id;
+                            $("#tab").find('i[id='+idClicked+']').parent().parent().parent().remove();
+                            var remove = data.message[idClicked].image;
+                            $.post("http://localhost:8000/api/delete_projects",{remove} ,(data) => {
+                                if(data.success) {
+                                    alert("Deleted successfully!");
+                                }
+                            });
+                        });
+                    });
+                    flag1 = 1;
+                }
             });
             $("#option3").click(function () {
                 $("#add").css("display", "none");
                 $("#job").css("display", "block");
                 $("#delete").css("display", "none");
-                $.get("http://localhost:8000/api/applications", (data) => {
-                    if (!data.success)
-                        alert("Error occurred. Try again.");
-                    else {
-                        for (var j = 0; j < data.message.length; j++) {
-                            var value = data.message[j];
-                            var position = "";
-                            if (value.position == 1)
-                                position = "Intern";
-                            else
-                                position = "Full time";
-                            $("#app").append("<tr><td>" + value.name + "</td><td>" + value.email + "</td><td>" + value.phone + "</td><td>" + position + "</td><td>" + value.current + "</td><td>" + value.info + "</td></tr>");
+                if(flag == 0) {
+                    $.get("http://localhost:8000/api/applications", (data) => {
+                        if (!data.success)
+                            alert("Error occurred. Try again.");
+                        else {
+                            for (var j = 0; j < data.message.length; j++) {
+                                var value = data.message[j];
+                                var position = "";
+                                if (value.position == 1)
+                                    position = "Intern";
+                                else
+                                    position = "Full time";
+                                $("#app").append("<tr><td>" + value.name + "</td><td>" + value.email + "</td><td>" + value.phone + "</td><td>" + position + "</td><td>" + value.current + "</td><td>" + value.info + "</td></tr>");
+                            }
                         }
-                    }
-                });
+                    });
+                    flag = 1;
+                }
             });
         });
     </script>
@@ -151,9 +175,9 @@
         <div class="col-8 mx-auto">
             <div class="card" id="job" style="margin-top: 100px; margin-left: 30px;">
                 <div class="card-body text-center">
-                    <div class="card-title">
-                        <i class="fa fa-address-card" style="color:teal; font-size: 50px;"></i>
-                        <h3 style="margin-top:5px; margin-bottom: 20px; color: teal;">Job applications</h3>
+                    <div class="card-title" style="background-color: teal">
+                        <i class="fa fa-address-card" style="color:white; font-size: 50px; padding-top: 10px;"></i>
+                        <h3 style="padding-top:5px; padding-bottom: 20px; color: white;">Job applications</h3>
                     </div>
                     <table id="app" class="table table-striped">
                         <tr>
@@ -171,38 +195,38 @@
     </div>
     <div class="row align-items-center">
         <div class="col-8 mx-auto">
-            <div class="card" id="add" style="margin-top: 100px; margin-left: 30px;">
+            <div class="card" id="add" style="margin-top: 80px; margin-left: 30px;">
                 <div class="card-body text-center">
-                    <div class="card-title">
-                        <i class="fa fa-plus" style="color:teal; font-size: 50px;"></i>
-                        <h3 style="margin-top:5px; margin-bottom: 20px; color: teal;">Add projects</h3>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label">Project name</label>
-                            <div class="col-md-8">
-                                <input type="text" class="form-control" id="name1" placeholder="Enter the project name">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label">Address</label>
-                            <div class="col-md-8">
-                                <textarea class="form-control" id="address" placeholder="Enter the address of the project"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label">Information</label>
-                            <div class="col-md-8">
-                                <textarea class="form-control" id="info" placeholder="Additional information"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label">Choose a picture</label>
-                            <div class="col-md-3">
-                                <input id="dp" type="file" accept="image/*" name="dp" />
-                            </div>
-                        </div>
-                        <button id="button" class="btn mx-auto" style="background-color: teal; color: white;">Add</button>
+                    <div class="card-title" style="background-color: teal;">
+                        <i class="fa fa-plus" style="color:white; font-size: 50px; padding-top: 10px;"></i>
+                        <h3 style="padding-top:5px; padding-bottom: 20px; color: white;">Add projects</h3>
                     </div>
-                    <div class="alert alert-success mx-auto" role="alert" id="success">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Project name</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="name1" placeholder="Enter the project name">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Address</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" id="address" placeholder="Enter the address of the project"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Information</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" id="info" placeholder="Additional information"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Choose a picture</label>
+                        <div class="col-md-3">
+                            <input id="dp" type="file" accept="image/*" name="dp" />
+                        </div>
+                    </div>
+                    <button id="button" class="btn mx-auto" style="background-color: teal; color: white;">Add</button>
+                    <div class="alert alert-success mx-auto" role="alert" id="success" style="margin-top: 10px;">
                         Added the project successfully!
                     </div>
                     <div class="alert alert-danger mx-auto" role="alert" id="danger">
@@ -216,9 +240,9 @@
         <div class="col-md-8 mx-auto">
             <div class="card" id="delete" style="margin-top: 100px; margin-left: 30px;">
                 <div class="card-body text-center">
-                    <div class="card-title">
-                        <i class="fa fa-minus" style="color:teal; font-size: 50px;"></i>
-                        <h3 style="margin-top:5px; margin-bottom: 20px; color: teal;">Delete projects</h3>
+                    <div class="card-title" style="background-color: teal">
+                        <i class="fa fa-minus" style="color:white; font-size: 50px;"></i>
+                        <h3 style="padding-bottom: 20px; color: white;">Delete projects</h3>
                     </div>
                     <table id="tab" class="table">
                     </table>
