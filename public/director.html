@@ -24,28 +24,23 @@
             bottom: 0;
             left: 0;
             right: 0;
-            position: fixed;
         }
 
         .navbar {
             background-color: rgb(0, 128, 128);
         }
 
-        #brand, #logout {
+        #brand,
+        #logout {
             color: white !important;
         }
 
-        table,th,td {
-            border: 1px solid;
-            padding: 5px;
+        i {
+            color: teal;
         }
 
-        table {
-            border-collapse: separate !important;
-        }
-
-        tr:nth-child(odd) {
-            background-color: #d1cfcf;
+        #tab {
+            width: 100%;
         }
     </style>
     <script>    
@@ -54,14 +49,16 @@
             $("#add").css("display", "none");
             $("#success").css("display", "none");
             $("#danger").css("display", "none");
-            $("#option1").click(function() {
-                $("#job").css("display","none");
-                $("#add").css("display","block");
-                $("#button").click(function() {
+            $("#delete").css("display", "none");
+            $("#tab").css("display", "none");
+            $("#option1").click(function () {
+                $("#job").css("display", "none");
+                $("#delete").css("display", "none");
+                $("#add").css("display", "block");
+                $("#button").click(function () {
                     var name = $("#name1").val();
                     var address = $("#address").val();
                     var info = $("#info").val();
-                    console.log(address);
                     let fd = new FormData();
                     fd.append("name", name);
                     fd.append("address", address);
@@ -91,9 +88,24 @@
                     });
                 });
             });
+            $("#option2").click(function () {
+                $("#add").css("display", "none");
+                $("#job").css("display", "none");
+                $("#delete").css("display", "block");
+                $("table").css("display", "block");
+                $.get("http://localhost:8000/api/projects", (data) => {
+                    if (data.success) {
+                        for (var i = 0; i < data.message.length; i++) {
+                            var value = data.message[i];
+                            $("#tab").append("<tr><td><a href='#'><i class='fa fa-trash'></i></a></td><td>" + value.name + "</td><td>" + value.address + "</td><td><img class='img-thumbnail' style='width: auto;' src='" + value.image + "'</td></tr>");
+                        }
+                    }
+                });
+            });
             $("#option3").click(function () {
                 $("#add").css("display", "none");
                 $("#job").css("display", "block");
+                $("#delete").css("display", "none");
                 $.get("http://localhost:8000/api/applications", (data) => {
                     if (!data.success)
                         alert("Error occurred. Try again.");
@@ -105,7 +117,7 @@
                                 position = "Intern";
                             else
                                 position = "Full time";
-                            $("table").append("<tr><td>" + value.name + "</td><td>" + value.email + "</td><td>" + value.phone + "</td><td>" + position + "</td><td>" + value.current + "</td><td>" + value.info + "</td></tr>");
+                            $("#app").append("<tr><td>" + value.name + "</td><td>" + value.email + "</td><td>" + value.phone + "</td><td>" + position + "</td><td>" + value.current + "</td><td>" + value.info + "</td></tr>");
                         }
                     }
                 });
@@ -120,7 +132,7 @@
         />
         <a href="#" id="option1">
             <i class="fa fa-plus" style="font-size:18px; margin-right: 10px;"></i>Add projects</a>
-        <a href="#">
+        <a href="#" id="option2">
             <i class="fa fa-minus" style="font-size:18px; margin-right: 10px;"></i>Delete projects</a>
         <a href="#" id="option3">
             <i class="fa fa-address-card" style="font-size:18px; margin-right: 10px;"></i>Job applications</a>
@@ -143,7 +155,7 @@
                         <i class="fa fa-address-card" style="color:teal; font-size: 50px;"></i>
                         <h3 style="margin-top:5px; margin-bottom: 20px; color: teal;">Job applications</h3>
                     </div>
-                    <table>
+                    <table id="app" class="table table-striped">
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
@@ -200,5 +212,20 @@
             </div>
         </div>
     </div>
+    <div class="row align-items-center">
+        <div class="col-md-8 mx-auto">
+            <div class="card" id="delete" style="margin-top: 100px; margin-left: 30px;">
+                <div class="card-body text-center">
+                    <div class="card-title">
+                        <i class="fa fa-minus" style="color:teal; font-size: 50px;"></i>
+                        <h3 style="margin-top:5px; margin-bottom: 20px; color: teal;">Delete projects</h3>
+                    </div>
+                    <table id="tab" class="table">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

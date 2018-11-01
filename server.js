@@ -56,12 +56,12 @@ app.post("/api/add",function(req,res) {
         }
         let {name,address,info} = fields;
         let {dp} = files;
-        if (!fs.existsSync("./buildings"))
-            fs.mkdirSync("./buildings");
-        if (!fs.existsSync(`./buildings/${name}`))
-            fs.mkdirSync(`./buildings/${name}`);
+        if (!fs.existsSync("public/buildings"))
+            fs.mkdirSync("public/buildings");
+        if (!fs.existsSync(`public/buildings/${name}`))
+            fs.mkdirSync(`public/buildings/${name}`);
         
-        fs.rename(dp.path, `./buildings/${name}/${dp.name}`, (e) => {
+        fs.rename(dp.path, `public/buildings/${name}/${dp.name}`, (e) => {
             if (e) {
                 res.end(JSON.stringify({success: false, message: "Couldn't upload image"}));
                 return;
@@ -75,6 +75,18 @@ app.post("/api/add",function(req,res) {
             });
         });
     });
+});
+
+app.get("/api/projects",function(req,res) {
+    res.writeHead(200, {"Content-Type": "application/json"});
+    connection();
+    con.query("select * from projects",function(err,rows,fields) {
+        if(err) {
+            res.end(JSON.stringify({success: false,message: "Unknown error occurred"}));
+        }
+        res.end(JSON.stringify({success: true, message: rows}));
+    });
+    con.end();
 });
 
 var port = 8000;
