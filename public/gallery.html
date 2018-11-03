@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <title>Gallery</title>
+        <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <style>
+            .fadeOut{
+                opacity:0.6;
+                transition: opacity 1s ease-in-out;
+            }
+            .card {
+                position: relative;
+                width: 250px;
+                height: 350px;
+            }
+            .card img {
+                width: 100%;
+                height: 65%;
+            }
+            .card #button {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                background-color: #555;
+                color: white;
+                font-size: 16px;
+                padding: 12px 24px;
+                border: none;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+        </style>
+        <script>
+            $(document).ready(function(){
+                $("#button").hide();
+                $(".card").on({
+                    "mouseover" : function() {
+                        $("#left1").addClass("fadeOut");
+                        $("#button").show();
+                        },
+                        "mouseout" : function() {
+                        $("#left1").removeClass("fadeOut");
+                        $("#button").hide();
+                    }
+                 });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="sidenav">
+            <a href="#" id="option1" style="margin-top: 100px;"><i class="fa fa-home" style="font-size:18px; margin-right: 10px;"></i>Residential</a>
+            <hr/>
+            <a href="#" id="option2"><i class="fa fa-building" style="font-size:18px; margin-right: 10px;"></i>Commercial</a>
+            <hr/>
+        </div>
+        <div class="navbar navbar-expand-lg">
+            <a class="navbar-brand" id="brand" style="color: white !important;">Gallery</a>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="main.html"><i class="fa fa-angle-left" style="font-size: 20px; color: white !important;"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="card" style="margin-left: 300px;">
+            <img src="slide1.jpg" id="left1" width="200px" height="200px">
+            <button id="button">View</button>
+            <div class="card-body">
+                <div class="card-title"><h2>Building 1</h2></div>
+                This is building 1. <br/>
+                <b>Address: </b>This is the address
+            </div>
+        </div>
+    </body>
+</html>
