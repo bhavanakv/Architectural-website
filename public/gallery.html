@@ -10,17 +10,19 @@
         <style>
             .fadeOut{
                 opacity:0.6;
-                transition: opacity 1s ease-in-out;
+                transition: opacity 0.5s ease-in-out;
             }
             .card {
                 position: relative;
                 width: 250px;
                 height: 350px;
+                margin-left: 300px;
             }
             .card img {
                 width: 100%;
                 height: 65%;
             }
+
             .card #button {
                 position: absolute;
                 top: 50%;
@@ -38,17 +40,28 @@
         </style>
         <script>
             $(document).ready(function(){
-                $("#button").hide();
-                $(".card").on({
-                    "mouseover" : function() {
-                        $("#left1").addClass("fadeOut");
-                        $("#button").show();
-                        },
-                        "mouseout" : function() {
-                        $("#left1").removeClass("fadeOut");
-                        $("#button").hide();
+                $.get("http://localhost:8000/api/projects",(data) => {
+                    if(data.success) {
+                        display = [];
+                        for(var i=0;i<data.message.length;i++)  {
+                            var value = data.message[i];
+                            var image = value.image;
+                            display += "<div class='card' id='"+ i +"' style='margin-left: 30px;'><img src='" + image + "' id='left1' width='200px' height='200px'><button id='button'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.name +"</h2></div>" + value.info + "<br/><b>Address: </b>" + value.address + "</div>";
+                            $("button").hide();
+                        }
+                        $("body").append(display);
+                        $(".card").on({
+                                "mouseover" : function() {
+                                    $("#left1").addClass("fadeOut");
+                                    $("button").show();
+                                },
+                                "mouseout" : function() {
+                                    $("#left1").removeClass("fadeOut");
+                                    $("button").hide();
+                                }
+                            });
                     }
-                 });
+                });
             });
         </script>
     </head>
@@ -67,15 +80,6 @@
                         <a class="nav-link" href="main.html"><i class="fa fa-angle-left" style="font-size: 20px; color: white !important;"></i></a>
                     </li>
                 </ul>
-            </div>
-        </div>
-        <div class="card" style="margin-left: 300px;">
-            <img src="slide1.jpg" id="left1" width="200px" height="200px">
-            <button id="button">View</button>
-            <div class="card-body">
-                <div class="card-title"><h2>Building 1</h2></div>
-                This is building 1. <br/>
-                <b>Address: </b>This is the address
             </div>
         </div>
     </body>
