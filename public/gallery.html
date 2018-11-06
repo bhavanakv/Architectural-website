@@ -16,20 +16,19 @@
                 position: relative;
                 width: 250px;
                 height: 350px;
-                margin-left: 300px;
             }
             .card img {
                 width: 100%;
                 height: 65%;
             }
 
-            .card #button {
+            button {
                 position: absolute;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
                 -ms-transform: translate(-50%, -50%);
-                background-color: #555;
+                background-color: teal;
                 color: white;
                 font-size: 16px;
                 padding: 12px 24px;
@@ -37,6 +36,21 @@
                 cursor: pointer;
                 border-radius: 5px;
             }
+
+            .grid-container {
+                display: grid;
+                grid-template-columns: auto auto auto;
+                grid-auto-rows: auto;
+                grid-gap: 10px;
+                margin-left: 300px;
+                margin-top: 10px;
+            }
+
+            .grid-item {
+                padding: 20px;
+                text-align: center;
+            }
+
         </style>
         <script>
             $(document).ready(function(){
@@ -46,20 +60,25 @@
                         for(var i=0;i<data.message.length;i++)  {
                             var value = data.message[i];
                             var image = value.image;
-                            display += "<div class='card' id='"+ i +"' style='margin-left: 30px;'><img src='" + image + "' id='left1' width='200px' height='200px'><button id='button'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.name +"</h2></div>" + value.info + "<br/><b>Address: </b>" + value.address + "</div>";
+                            display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='65%'><button id='b"+ i +"' data-toggle='modal' data-target='#exampleModalLong'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.name +"</h2></div>" + value.info + "<br/><b>Address: </b>" + value.address + "</div></div>";
+                            $(".grid-container").append(display);
                             $("button").hide();
                         }
-                        $("body").append(display);
-                        $(".card").on({
-                                "mouseover" : function() {
-                                    $("#left1").addClass("fadeOut");
-                                    $("button").show();
-                                },
-                                "mouseout" : function() {
-                                    $("#left1").removeClass("fadeOut");
-                                    $("button").hide();
-                                }
-                            });
+                        $(".card").mouseover(function() {
+                            var id = "#c" + this.id;
+                            var id_button = "#b" + this.id;
+                            $(id).addClass("fadeOut");
+                            $(id_button).show();
+                        });
+                        $(".card").mouseout(function() {
+                            var id = "#c" + this.id;
+                            var id_button = "#b" + this.id;
+                            $(id).removeClass("fadeOut");
+                            $(id_button).hide();
+                        });
+                        $("button").click(function(e) {
+                            $(".modal-body").html(data.message[e.target.id[1]].image);
+                        });
                     }
                 });
             });
@@ -82,5 +101,25 @@
                 </ul>
             </div>
         </div>
+        <div class="grid-container"></div>
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  ...
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
     </body>
 </html>
