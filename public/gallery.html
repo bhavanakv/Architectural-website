@@ -60,7 +60,16 @@
                         for(var i=0;i<data.message.length;i++)  {
                             var value = data.message[i];
                             var image = value.image;
-                            display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='65%'><button class='button' id='b"+ i +"' data-toggle='modal' data-target='#exampleModalCenter'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.name +"</h2></div>" + value.info + "<br/><b>Address: </b>" + value.address + "</div></div>";
+                            var d = new Date();
+                            var type = "";
+                            if(value.type == 1)
+                                type = "Residential"
+                            else
+                                type = "Commercial"
+                            if(new Date(value.date)-d < 5) 
+                                display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='65%'><button class='button' id='b"+ i +"' data-toggle='modal' data-target='#exampleModalCenter'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.project +"</h2><h5> By- "+ value.name +"<span class='badge badge-info' style='margin-left: 5px;'>New</span></h5></div><div>"+ type +"</div>";
+                            else
+                                display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='65%'><button class='button' id='b"+ i +"' data-toggle='modal' data-target='#exampleModalCenter'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.name +"</h2></div><br/><b>Address: </b>" + value.address + "</div><div>"+ type +"</div></div>";
                             $(".grid-container").append(display);
                             $(".button").hide();
                         }
@@ -78,7 +87,122 @@
                         });
                         $("button").click(function(e) {
                             var image = data.message[e.target.id[1]].image;
+                            var project = data.message[e.target.id[1]].project;
+                            var name = data.message[e.target.id[1]].name;
                             $("#ex").attr("src",image);
+                            $("#title").html(project);
+                            $("h3").html(name)
+                            $("#overview").html(data.message[e.target.id[1]].info);
+                            $("#address-tab").click(function() {
+                                $("#address").html(data.message[e.target.id[1]].address);
+                            });
+                            $("#overview-tab").click(function() {
+                                $("#overview").html(data.message[e.target.id[1]].info);
+                            });
+                            $("#contact-tab").click(function() {
+                                $("#contact").html(data.message[e.target.id[1]].contact);
+                            });
+                            $("#amenities-tab").click(function() {
+                                $("#amenities").html(data.message[e.target.id[1]].amenities);
+                            });
+                        });
+                        $("#option1").click(function() {
+                            $(".grid-container").html(" ");
+                            for(var i=0;i<data.message.length;i++) {
+                                if(data.message[i].type == 1) {
+                                    var value = data.message[i];
+                                    var image = value.image;
+                                    var d = new Date();
+                                    if(new Date(value.date)-d < 5)
+                                        display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='65%'><button class='button' id='b"+ i +"' data-toggle='modal' data-target='#exampleModalCenter'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.project +"</h2><h5> By- "+ value.name +"<span class='badge badge-info' style='margin-left: 5px;'>New</span></h5></div><br/></div>";
+                                    else
+                                        display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='65%'><button class='button' id='b"+ i +"' data-toggle='modal' data-target='#exampleModalCenter'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.name +"</h2></div><br/><b>Address: </b>" + value.address + "</div></div>";
+                                    $(".grid-container").append(display);
+                                    $(".button").hide();
+                                }
+                            }
+                            $(".card").mouseover(function() {
+                                var id = "#c" + this.id;
+                                var id_button = "#b" + this.id;
+                                $(id).addClass("fadeOut");
+                                $(id_button).show();
+                            });
+                            $(".card").mouseout(function() {
+                                var id = "#c" + this.id;
+                                var id_button = "#b" + this.id;
+                                $(id).removeClass("fadeOut");
+                                $(id_button).hide();
+                            });
+                            $("button").click(function(e) {
+                                var image = data.message[e.target.id[1]].image;
+                                var project = data.message[e.target.id[1]].project;
+                                var name = data.message[e.target.id[1]].name;
+                                $("#ex").attr("src",image);
+                                $("#title").html(project);
+                                $("h3").html(name)
+                                $("#overview").html(data.message[e.target.id[1]].info);
+                                $("#address-tab").click(function() {
+                                    $("#address").html(data.message[e.target.id[1]].address);
+                                });
+                                $("#overview-tab").click(function() {
+                                    $("#overview").html(data.message[e.target.id[1]].info);
+                                });
+                                $("#contact-tab").click(function() {
+                                    $("#contact").html(data.message[e.target.id[1]].contact);
+                                });
+                                $("#amenities-tab").click(function() {
+                                    $("#amenities").html(data.message[e.target.id[1]].amenities);
+                                });
+                            });
+                        });
+                        $("#option2").click(function() {
+                            $(".grid-container").html(" ");
+                            for(var i=0;i<data.message.length;i++) {
+                                if(data.message[i].type == 2) {
+                                    var value = data.message[i];
+                                    var image = value.image;
+                                    var d = new Date();
+                                    if(new Date(value.date)-d < 5)
+                                        display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='65%'><button class='button' id='b"+ i +"' data-toggle='modal' data-target='#exampleModalCenter'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.project +"</h2><h5> By- "+ value.name +"<span class='badge badge-info' style='margin-left: 5px;'>New</span></h5></div><br/></div>";
+                                    else
+                                        display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='65%'><button class='button' id='b"+ i +"' data-toggle='modal' data-target='#exampleModalCenter'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.name +"</h2></div><br/><b>Address: </b>" + value.address + "</div></div>";
+                                    $(".grid-container").append(display);
+                                    $(".button").hide();
+                                }
+                            }
+                            $(".card").mouseover(function() {
+                                var id = "#c" + this.id;
+                                var id_button = "#b" + this.id;
+                                $(id).addClass("fadeOut");
+                                $(id_button).show();
+                            });
+                            $(".card").mouseout(function() {
+                                var id = "#c" + this.id;
+                                var id_button = "#b" + this.id;
+                                $(id).removeClass("fadeOut");
+                                $(id_button).hide();
+                            });
+                            $("button").click(function(e) {
+                                var image = data.message[e.target.id[1]].image;
+                                var project = data.message[e.target.id[1]].project;
+                                var name = data.message[e.target.id[1]].name;
+                                $("#ex").attr("src",image);
+                                $("#title").html(project);
+                                $("h3").html(name)
+                                $("#overview").html(data.message[e.target.id[1]].info);
+                                $("#address-tab").click(function() {
+                                    $("#address").html(data.message[e.target.id[1]].address);
+                                });
+                                $("#overview-tab").click(function() {
+                                    $("#overview").html(data.message[e.target.id[1]].info);
+                                });
+                                $("#contact-tab").click(function() {
+                                    $("#contact").html(data.message[e.target.id[1]].contact);
+                                });
+                                $("#amenities-tab").click(function() {
+                                    $("#amenities").html(data.message[e.target.id[1]].amenities);
+                                });
+                            });
                         });
                     }
                 });
@@ -107,13 +231,28 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin: -8.5rem -1rem -1rem 220px !important">
+                        <h5 class="modal-title" id="title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin: -210px -1rem -1rem 220px !important">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <img id="ex" style="width: 100%; height: 200px;" />
+                        <h3 class="text-center" style="margin-top: 10px;"></h3>
+                        <nav style="margin-top: 40px;">
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="nav-home" aria-selected="true"><i class="fa fa-info"></i> Overview</a>
+                                <a class="nav-item nav-link" id="address-tab" data-toggle="tab" href="#address" role="tab" aria-controls="nav-profile" aria-selected="false"><i class="fa fa-map-marker"></i> Address</a>
+                                <a class="nav-item nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fa fa-phone"></i> Contact</a>
+                                <a class="nav-item nav-link" id="amenities-tab" data-toggle="tab" href="#amenities" role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fa fa-tasks"></i> Amenities</a>
+                            </div>
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent" style="margin-top: 10px;">
+                            <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
+                            <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+                            <div class="tab-pane fade" id="amenities" role="tabpanel" aria-labelledby="nav-amenities-tab">...</div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <br/>
