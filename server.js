@@ -54,7 +54,7 @@ app.post("/api/add",function(req,res) {
             res.end(JSON.stringify({success: false, message: "Couldn't parse request"}));
             return;
         }
-        let {name,address,info} = fields;
+        let {name,address,info,project,contact,type,amenities} = fields;
         let {dp} = files;
         if (!fs.existsSync("public/buildings"))
             fs.mkdirSync("public/buildings");
@@ -67,7 +67,7 @@ app.post("/api/add",function(req,res) {
                 return;
             }
             connection();
-            con.query("insert into projects values(?,?,?,?,curdate())",[name,address,info,`./buildings/${name}/${dp.name}`],(err) => {
+            con.query("insert into projects values(?,?,?,?,curdate(),?,?,?,?)",[name,address,info,`./buildings/${name}/${dp.name}`,project,contact,type,amenities],(err) => {
                 if(err) {
                     res.end(JSON.stringify({success:false, message:"Unknown error occurred.Try again."}));
                 }

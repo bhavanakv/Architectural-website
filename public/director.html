@@ -61,12 +61,29 @@
                 $("#add").css("display", "block");
                 $("#button").click(function () {
                     var name = $("#name1").val();
+                    var project = $("#project").val();
                     var address = $("#address").val();
                     var info = $("#info").val();
+                    var contact = $("#contact").val();
+                    var amenities = $("#amenities").val();
+                    var type = $("#type").val();
+                    var phone_regex = /\d{10}/;
+                    if(!phone_regex.test(contact)) {
+                        alert("Please enter valid phone number");
+                        return;
+                    }
+                    if(name == "" || project == "" || address == "" || info == "") {
+                        alert("Please fill in details!");
+                        return;
+                    }
                     let fd = new FormData();
                     fd.append("name", name);
                     fd.append("address", address);
                     fd.append("info", info);
+                    fd.append("project", project);
+                    fd.append("contact", contact);
+                    fd.append("amenities", amenities);
+                    fd.append("type", type);
                     fd.append("dp", $("#dp")[0].files[0]);
                     $.ajax({
                         url: "http://localhost:8000/api/add",
@@ -102,7 +119,7 @@
                         if (data.success) {
                             for (var i = 0; i < data.message.length; i++) {
                                 var value = data.message[i];
-                                $("#tab").append("<tr><td><a href='#'><i class='fa fa-trash' id='"+i+"'></i></a></td><td>" + value.name + "</td><td>" + value.address + "</td><td><img class='img-thumbnail' src='" + value.image + "'</td></tr>");
+                                $("#tab").append("<tr><td><a href='#'><i class='fa fa-trash' id='"+i+"'></i></a></td><td>" + value.name + "</td><td>" + value.project + "</td><td><img class='img-thumbnail' src='" + value.image + "'</td></tr>");
                             }
                         }
                         $("i.fa-trash").click(function(e) {
@@ -201,10 +218,16 @@
                         <h3 style="padding-top:5px; padding-bottom: 20px; color: white;">Add projects</h3>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Project name</label>
+                        <label class="col-md-3 col-form-label">Builder</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="name1" placeholder="Enter the project name">
+                            <input type="text" class="form-control" id="name1" placeholder="Enter the builder name">
                         </div>
+                    </div>
+                    <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Project</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="project" placeholder="Enter the project name">
+                            </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">Address</label>
@@ -218,6 +241,27 @@
                             <textarea class="form-control" id="info" placeholder="Additional information"></textarea>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Contact</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="contact" placeholder="Enter the contact details">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Amenities</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" id="amenities" placeholder="Enter amenities provided separated by commas"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Project type</label>
+                            <div class="col-md-8">
+                                <select style="width: 100%" id="type">
+                                    <option value="1">Residential</option>
+                                    <option value="2">Commercial</option>
+                                </select>
+                            </div> 
+                        </div> 
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">Choose a picture</label>
                         <div class="col-md-3">
