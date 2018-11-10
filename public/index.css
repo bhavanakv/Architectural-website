@@ -63,3 +63,62 @@ hr {
     margin-top: 5px !important;
     margin-bottom: 5px !important; 
 }
+
+#container {
+    position: relative;
+}
+
+#container h2 {
+    color: #fff;
+    position: absolute;
+    font-size: 50px;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+}
+
+#container h4 {
+    color: #fff;
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+}
+
+.fadeOut{
+    opacity:0.6;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-auto-rows: auto;
+    grid-gap: 10px;
+    margin-left: 300px;
+    margin-top: 10px;
+}
+
+.grid-item {
+    padding: 20px;
+    text-align: center;
+}
+
+#brand,#logout {
+    color: white !important;
+}
+
+i.fa-trash {
+    color: teal;
+}
+
+#tab {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.img-thumbnail {
+    transform: scale(0.8, 0.8);
+    -ms-transform: scale(0.8, 0.8);
+    -webkit-transform: scale(0.8, 0.8);
+}
