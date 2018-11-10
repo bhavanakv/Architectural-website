@@ -37,8 +37,10 @@
                 $(".btn").click(function() {
                     var correct_password = "123456";
                     var password = $("#password").val();
-                    if(password == "")
+                    if(password == "") {
                         alert("Please enter the password");
+                        return;
+                    }
                     if(correct_password == password) {
                         $("#success").css("display","block"); 
                         setTimeout(function() {
