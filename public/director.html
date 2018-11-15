@@ -101,7 +101,7 @@
                         if (data.success) {
                             for (var i = 0; i < data.message.length; i++) {
                                 var value = data.message[i];
-                                $("#tab").append("<tr><td><a href='#'><i class='fa fa-trash' id='"+i+"'></i></a></td><td>" + value.name + "</td><td>" + value.project + "</td><td><img class='img-thumbnail' src='" + value.image + "'</td></tr>");
+                                $("#tab").append("<tr><td><a href='#'><i class='fa fa-trash' id='"+i+"'></i></a></td><td>" + value.name + "</td><td>" + value.project + "</td><td><img class='img-thumbnail' width='400px' height='400px' src='" + value.image + "'</td></tr>");
                             }
                         }
                         $("i.fa-trash").click(function(e) {

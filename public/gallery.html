@@ -10,15 +10,10 @@
         <style>   
             .card {
                 position: relative;
-                width: 250px;
-                height: 350px;
+                width: 270px;
+                height: 380px;
             }
             
-            .card img {
-                width: 100%;
-                height: 65%;
-            }
-
             button {
                 position: absolute;
                 top: 50%;
@@ -48,10 +43,11 @@
                                 type = "Residential"
                             else
                                 type = "Commercial"
-                            if(new Date(value.date)-d < 5) 
-                                display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='65%'><button class='button' id='b"+ i +"' data-toggle='modal' data-target='#exampleModalCenter'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.project +"</h2><h5> By- "+ value.name +"<span class='badge badge-info' style='margin-left: 5px;'>New</span></h5></div><div>"+ type +"</div>";
+                            let diff = (new Date(value.date) - d) / (86400 * 1000);
+                            if(diff > -5) 
+                                display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='200px'><button class='button' id='b"+ i +"' data-toggle='modal' data-target='#exampleModalCenter'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.project +"</h2><h5> By- "+ value.name +"<span class='badge badge-info' style='margin-left: 5px;'>New</span></h5></div><b>Address: </b>" + value.address + "</div><div>"+ type +"</div></div>";
                             else
-                                display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='65%'><button class='button' id='b"+ i +"' data-toggle='modal' data-target='#exampleModalCenter'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.name +"</h2></div><br/><b>Address: </b>" + value.address + "</div><div>"+ type +"</div></div>";
+                                display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='200px'><button class='button' id='b"+ i +"' data-toggle='modal' data-target='#exampleModalCenter'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.name + "</h2><h5> By- "+ value.name + "</div><b>Address: </b>" + value.address + "</div><div>"+ type +"</div></div>";
                             $(".grid-container").append(display);
                             $(".button").hide();
                         }
@@ -95,10 +91,11 @@
                                     var value = data.message[i];
                                     var image = value.image;
                                     var d = new Date();
-                                    if(new Date(value.date)-d < 5)
-                                        display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='65%'><button class='button' id='b"+ i +"' data-toggle='modal' data-target='#exampleModalCenter'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.project +"</h2><h5> By- "+ value.name +"<span class='badge badge-info' style='margin-left: 5px;'>New</span></h5></div><br/></div>";
+                                    let diff = (new Date(value.date) - d) / (86400 * 1000);
+                                    if(diff > -5) 
+                                        display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='200px'><button class='button' id='b"+ i +"' data-toggle='modal' data-target='#exampleModalCenter'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.project +"</h2><h5> By- "+ value.name +"<span class='badge badge-info' style='margin-left: 5px;'>New</span></h5></div><b>Address: </b>" + value.address + "</div>";
                                     else
-                                        display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='65%'><button class='button' id='b"+ i +"' data-toggle='modal' data-target='#exampleModalCenter'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.name +"</h2></div><br/><b>Address: </b>" + value.address + "</div></div>";
+                                        display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='200px'><button class='button' id='b"+ i +"' data-toggle='modal' data-target='#exampleModalCenter'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.name + "</h2><h5> By- "+ value.name + "</div><b>Address: </b>" + value.address + "</div>";
                                     $(".grid-container").append(display);
                                     $(".button").hide();
                                 }
@@ -144,10 +141,11 @@
                                     var value = data.message[i];
                                     var image = value.image;
                                     var d = new Date();
-                                    if(new Date(value.date)-d < 5)
-                                        display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='65%'><button class='button' id='b"+ i +"' data-toggle='modal' data-target='#exampleModalCenter'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.project +"</h2><h5> By- "+ value.name +"<span class='badge badge-info' style='margin-left: 5px;'>New</span></h5></div><br/></div>";
+                                    let diff = (new Date(value.date) - d) / (86400 * 1000);
+                                    if(diff > -5) 
+                                        display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='200px'><button class='button' id='b"+ i +"' data-toggle='modal' data-target='#exampleModalCenter'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.project +"</h2><h5> By- "+ value.name +"<span class='badge badge-info' style='margin-left: 5px;'>New</span></h5></div><b>Address: </b>" + value.address + "</div>";
                                     else
-                                        display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='65%'><button class='button' id='b"+ i +"' data-toggle='modal' data-target='#exampleModalCenter'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.name +"</h2></div><br/><b>Address: </b>" + value.address + "</div></div>";
+                                        display = "<div class='grid-item'><div class='card' id="+ i +"><img src='" + image + "' id='c"+ i +"' width='100%' height='200px'><button class='button' id='b"+ i +"' data-toggle='modal' data-target='#exampleModalCenter'>View</button><div class='card-body'><div class='card-title'><h2>"+ value.name + "</h2><h5> By- "+ value.name + "</div><b>Address: </b>" + value.address + "</div>";
                                     $(".grid-container").append(display);
                                     $(".button").hide();
                                 }
