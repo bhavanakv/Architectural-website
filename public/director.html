@@ -1,17 +1,12 @@
 <html>
-
 <head>
     <title>Director</title>
     <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
-        crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="fontawesome/css/all.css">
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="popper.min.js"></script>
+    <script src="bootstrap.min.js"></script>
     <style>
         img {
             border-radius: 50%;
@@ -147,7 +142,7 @@
 
 <body>
     <div class="sidenav">
-        <img src="slide1.jpg" alt="director" width="150px" height="150px" style="margin-left:33px; margin-top: 60px; margin-bottom: 10px"
+        <img src="1.jpg" alt="director" width="150px" height="150px" style="margin-left:33px; margin-top: 60px; margin-bottom: 10px"
         />
         <a href="#" id="option1">
             <i class="fa fa-plus" style="font-size:18px; margin-right: 10px;"></i>Add projects</a>
@@ -200,25 +195,25 @@
                         <h3 style="padding-top:5px; padding-bottom: 20px; color: white;">Add projects</h3>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Builder</label>
+                        <label class="col-md-3 col-form-label">Builder *</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control" id="name1" placeholder="Enter the builder name">
                         </div>
                     </div>
                     <div class="form-group row">
-                            <label class="col-md-3 col-form-label">Project</label>
+                            <label class="col-md-3 col-form-label">Project *</label>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" id="project" placeholder="Enter the project name">
                             </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Address</label>
+                        <label class="col-md-3 col-form-label">Address *</label>
                         <div class="col-md-8">
                             <textarea class="form-control" id="address" placeholder="Enter the address of the project"></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Information</label>
+                        <label class="col-md-3 col-form-label">Information *</label>
                         <div class="col-md-8">
                             <textarea class="form-control" id="info" placeholder="Additional information"></textarea>
                         </div>
@@ -276,5 +271,4 @@
         </div>
     </div>
 </body>
-
 </html>
